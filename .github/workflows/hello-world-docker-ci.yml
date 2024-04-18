@@ -1,8 +1,10 @@
 name: CI Build for Docker Action
+
 on:
   push:
-    branches: [ main ]
-    paths: [ hello-world-docker-action/** ]
+    branches: [main]
+    paths: 
+      - 'hello-world-docker-action/**'
   workflow_dispatch:
     inputs:
       environment:
@@ -17,7 +19,8 @@ jobs:
     needs: Build
     environment: Test
     steps:
-      - run: echo "🧪 Testing..."
+      - name: Test step
+        run: echo "🧪 Testing..."
 
   Load-Test:
     runs-on: ubuntu-latest
@@ -25,7 +28,8 @@ jobs:
     needs: Build
     environment: Load-Test
     steps:
-      - run: |
+      - name: Load Test step
+        run: |
           echo "🧪 Testing..."
           sleep 15
 
@@ -35,20 +39,25 @@ jobs:
     environment:
       name: Production
       url: https://writeabout.net
-    if: github.event.inputs.environment == 'Production'
+    if: ${{ github.event.inputs.environment == 'Production' }}
     steps:
-      - run: |
+      - name: Production Step 1
+        run: |
           echo "🚀 Step 1..."
           sleep 10
-      - run: |
+      - name: Production Step 2
+        run: |
           echo "🚀 Step 2..."
           sleep 10
-      - run: |
+      - name: Production Step 3
+        run: |
           echo "🚀 Step 3..."
           sleep 10
-      - run: |
+      - name: Production Step 4
+        run: |
           echo "🚀 Step 4..."
           sleep 10
-      - run: |
+      - name: Production Step 5
+        run: |
           echo "🚀 Step 5..."
           sleep 10
